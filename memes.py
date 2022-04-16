@@ -3,13 +3,29 @@ from email.mime import image
 from PIL import Image, ImageDraw, ImageFont
 from pytesseract import pytesseract
 import os
+import numpy as np
+import random
+
   
 # Defining paths to tesseract.exe
 # and the image we would be using
 # path_to_tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 path_to_tesseract = r"/usr/local/Cellar/tesseract/5.1.0/bin/tesseract"
-image_path = r"/Users/devikachipalkatti/Documents/meme/test.png"
-randomImage_path = r"/Users/devikachipalkatti/Documents/meme/gecko.png"
+image_path = r"/Users/devikachipalkatti/Documents/meme/text"
+randomImage_path = r"/Users/devikachipalkatti/Documents/meme/reactions"
+
+
+random_filename = random.choice([
+    x for x in os.listdir(randomImage_path)
+    if os.path.isfile(os.path.join(randomImage_path, x))
+])
+randomImage_path = r"/Users/devikachipalkatti/Documents/meme/reactions/" + random_filename
+
+random_text = random.choice([
+    x for x in os.listdir(image_path)
+    if os.path.isfile(os.path.join(image_path, x))
+])
+image_path = r"/Users/devikachipalkatti/Documents/meme/text/" + random_text
 
 
 # Opening the image & storing it in an image object
@@ -23,13 +39,15 @@ pytesseract.tesseract_cmd = path_to_tesseract
 # This function will extract the text from the image
 text = pytesseract.image_to_string(img)
 
+clr = tuple([np.random.choice(range(256)) for i in range(3)])
+newMeme=  Image.new('RGB', (700, 700), color = clr)
+newMeme.paste(randomImage, (50,200))
 
-newMeme=  Image.new('RGB', (700, 700), color = (73, 109, 137))
-newMeme.paste(randomImage, (100,50))
+# fnt = ImageFont.truetype('/Library/Fonts/Arial.ttf', 15)
+fnt = ImageFont.truetype(font='LuckiestGuy-Regular.ttf', size=35)
 
-fnt = ImageFont.truetype('/Library/Fonts/Arial.ttf', 15)
 d = ImageDraw.Draw(newMeme)
-d.text((10,10), text[:-1], font=fnt, fill=(255, 255, 0))
+d.text((100,100), text[:-1], font=fnt, fill=(255, 255, 0))
 newMeme.save('pil_text_font.png')
 # Displaying the extracted text
 # print(text[:-1])
