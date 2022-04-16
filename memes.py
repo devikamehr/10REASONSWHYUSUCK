@@ -13,7 +13,7 @@ import random
 path_to_tesseract = r"/usr/local/Cellar/tesseract/5.1.0/bin/tesseract"
 image_path = r"/Users/devikachipalkatti/Documents/meme/text"
 randomImage_path = r"/Users/devikachipalkatti/Documents/meme/reactions"
-
+final_path =r"/Users/devikachipalkatti/Documents/meme/draft"
 
 random_filename = random.choice([
     x for x in os.listdir(randomImage_path)
@@ -48,6 +48,8 @@ fnt = ImageFont.truetype(font='LuckiestGuy-Regular.ttf', size=35)
 
 d = ImageDraw.Draw(newMeme)
 d.text((100,100), text[:-1], font=fnt, fill=(255, 255, 0))
-newMeme.save('pil_text_font.png')
+filenum = str(random.randint(0,10000))
+newMeme = newMeme.save(f"{final_path}/image" + filenum + ".png")
+
 # Displaying the extracted text
 # print(text[:-1])
