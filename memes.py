@@ -1,6 +1,6 @@
 
 from email.mime import image
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageSequence, ImageChops
 from pytesseract import pytesseract
 import os
 import numpy as np
@@ -13,11 +13,11 @@ import textwrap
 list_of_text = loader.createPhrases()
   
 
-for i in range(20):
+for i in range(1):
     # Grab paths
     randomImage_path = r"/Users/devikachipalkatti/Documents/meme/reactions"
     final_path =r"/Users/devikachipalkatti/Documents/meme/draft"
-
+    animated_path = r"/Users/devikachipalkatti/Documents/meme/sparkles"
     # Pick a random backgorund file path.
     random_filename = random.choice([
         x for x in os.listdir(randomImage_path)
@@ -25,10 +25,24 @@ for i in range(20):
     ])
     randomImage_path = r"/Users/devikachipalkatti/Documents/meme/reactions/" + random_filename
 
+    animated_gif = random.choice([
+        x for x in os.listdir(animated_path)
+        if os.path.isfile(os.path.join(animated_path, x))
+    ])
+    animated_path = r"/Users/devikachipalkatti/Documents/meme/sparkles/" + animated_gif
+
     # Pick a random text and background together
     random_text = random.choice(list_of_text)
-
     randomImage = Image.open(randomImage_path)
+    animated_gif = Image.open('sparkles/original.gif')
+    animated_gif = Image.open(animated_path)
+    print(randomImage.size[0], randomImage.size[1])
+    width = int(randomImage.size[0])
+    height = int(randomImage.size[1])
+    # ImageChops.offset(animated_gif, width//2, -1 *(height//2))
+
+    # animated_gif = animated_gif.resize((randomImage.size[0], randomImage.size[1]))
+    # animated_gif.show()
 
     # Pick a random color and font
     clr = tuple([np.random.choice(range(256)) for i in range(3)])
@@ -43,6 +57,18 @@ for i in range(20):
     draw = ImageDraw.Draw(randomImage)
     draw.text(xy=(randomImage.size[0]/2, randomImage.size[1] / 2), text=text, font=font, fill='#000000', anchor='mm')
 
-    # Save the image
     filenum = str(random.randint(0,10000))
-    randomImage = randomImage.save(f"{final_path}/image" + filenum + ".png")
+ 
+    # gif shit
+    all_frames = []
+    for gif_frame in ImageSequence.Iterator(animated_gif):
+        new_frame = randomImage.copy()
+        gif_frame = gif_frame.convert('RGBA')
+        gif_frame = gif_frame.resize((width, height))
+        new_frame.paste(gif_frame, (width//6, height//6),mask=gif_frame)
+        all_frames.append(new_frame)
+        # ImageChops.offset(new_frame, width//2,height//2 )
+
+    all_frames[0].save(f"{final_path}/image" + filenum + ".gif", save_all=True, append_images=all_frames[1:], duration=50, loop=0)
+    # Save the image
+
