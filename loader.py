@@ -124,7 +124,8 @@ def generateText(d, N):
 
 def createPhrases():
     d = createDictionary('info.txt')
-    l = generateText(d, 50).split('.')
+    l = generateText(d, 20).split('.')
     return l
+
 
 

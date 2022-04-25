@@ -10,10 +10,13 @@ from string import ascii_letters
 import textwrap
 
 # Grab list of phrases from markov model
-list_of_text = loader.createPhrases()
-  
+list_of_text = []
+for i in range(10):
+    temp = loader.createPhrases()
+    list_of_text += temp
 
-for i in range(1):
+
+for i in range(25):
     # Grab paths
     randomImage_path = r"/Users/devikachipalkatti/Documents/meme/reactions"
     final_path =r"/Users/devikachipalkatti/Documents/meme/draft"
@@ -36,7 +39,7 @@ for i in range(1):
     randomImage = Image.open(randomImage_path)
     animated_gif = Image.open('sparkles/original.gif')
     animated_gif = Image.open(animated_path)
-    print(randomImage.size[0], randomImage.size[1])
+    print(randomImage_path)
     width = int(randomImage.size[0])
     height = int(randomImage.size[1])
     # ImageChops.offset(animated_gif, width//2, -1 *(height//2))
@@ -65,7 +68,7 @@ for i in range(1):
         new_frame = randomImage.copy()
         gif_frame = gif_frame.convert('RGBA')
         gif_frame = gif_frame.resize((width, height))
-        new_frame.paste(gif_frame, (width//6, height//6),mask=gif_frame)
+        new_frame.paste(gif_frame, (width//6 - 40, height//6),mask=gif_frame)
         all_frames.append(new_frame)
         # ImageChops.offset(new_frame, width//2,height//2 )
 
