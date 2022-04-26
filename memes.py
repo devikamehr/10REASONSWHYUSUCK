@@ -16,7 +16,7 @@ for i in range(10):
     list_of_text += temp
 
 
-for i in range(10):
+for i in range(30):
     # Grab paths
     randomImage_path = r"/Users/devikachipalkatti/Documents/meme/reactions"
     final_path =r"/Users/devikachipalkatti/Documents/meme/draft"
