@@ -9,13 +9,16 @@ import loader
 from string import ascii_letters
 import textwrap
 
-# Grab list of phrases from markov model
-list_of_text = ["The ABCS of this current political movement", "Unpack white feminism", "Let's talk about cancel culture", "What is degrowth", "Apps to keep you conscious",
-"Ways to donate", "110 ways to practice being anti-racist if you can't spend money or leave the house", "how to refresh from political overload", "why consumerism culture is racist",
-"how to be antiracist", "Let's talk about transphobia", "Why you should stop using Amazon", "so you want to talk about mail-in voting", "being an anti-racist ally", "what is performative activism"]
-# for i in range(10):
-#     temp = loader.createPhrases()
-#     list_of_text += temp
+# Grab list of phrases from markov model, uncomment the other one to make 
+# real captions.
+list_of_text = []
+
+# list_of_text = ["The ABCS of this current political movement", "Unpack white feminism", "Let's talk about cancel culture", "What is degrowth", "Apps to keep you conscious",
+# "Ways to donate", "110 ways to practice being anti-racist if you can't spend money or leave the house", "how to refresh from political overload", "why consumerism culture is racist",
+# "how to be antiracist", "Let's talk about transphobia", "Why you should stop using Amazon", "so you want to talk about mail-in voting", "being an anti-racist ally", "what is performative activism"]
+for i in range(10):
+    temp = loader.createPhrases()
+    list_of_text += temp
 
 
 for i in range(15):
@@ -44,10 +47,8 @@ for i in range(15):
     print(randomImage_path)
     width = int(randomImage.size[0])
     height = int(randomImage.size[1])
-    # ImageChops.offset(animated_gif, width//2, -1 *(height//2))
 
-    # animated_gif = animated_gif.resize((randomImage.size[0], randomImage.size[1]))
-    # animated_gif.show()
+ 
 
     # Pick a random color and font
     clr = tuple([np.random.choice(range(256)) for i in range(3)])
@@ -72,7 +73,6 @@ for i in range(15):
         gif_frame = gif_frame.resize((width, height))
         new_frame.paste(gif_frame, (width//6 - 40, height//6),mask=gif_frame)
         all_frames.append(new_frame)
-        # ImageChops.offset(new_frame, width//2,height//2 )
 
     all_frames[0].save(f"{final_path}/image" + filenum + ".gif", save_all=True, append_images=all_frames[1:], duration=50, loop=0)
     # Save the image
