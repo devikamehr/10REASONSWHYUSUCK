@@ -10,13 +10,15 @@ from string import ascii_letters
 import textwrap
 
 # Grab list of phrases from markov model
-list_of_text = []
-for i in range(10):
-    temp = loader.createPhrases()
-    list_of_text += temp
+list_of_text = ["The ABCS of this current political movement", "Unpack white feminism", "Let's talk about cancel culture", "What is degrowth", "Apps to keep you conscious",
+"Ways to donate", "110 ways to practice being anti-racist if you can't spend money or leave the house", "how to refresh from political overload", "why consumerism culture is racist",
+"how to be antiracist", "Let's talk about transphobia", "Why you should stop using Amazon", "so you want to talk about mail-in voting", "being an anti-racist ally", "what is performative activism"]
+# for i in range(10):
+#     temp = loader.createPhrases()
+#     list_of_text += temp
 
 
-for i in range(30):
+for i in range(15):
     # Grab paths
     randomImage_path = r"/Users/devikachipalkatti/Documents/meme/reactions"
     final_path =r"/Users/devikachipalkatti/Documents/meme/draft"
